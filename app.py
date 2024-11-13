@@ -1,3 +1,4 @@
+import os
 from flask import Flask, render_template, request
 from youtube_transcript_api import YouTubeTranscriptApi, TranscriptsDisabled, VideoUnavailable, NoTranscriptFound
 from youtube_transcript_api.formatters import SRTFormatter
@@ -83,6 +84,9 @@ def format_to_text(subtitles):
     return "\n".join(sub['text'] for sub in subtitles)
 
 
-# Running the app
+
+
 if __name__ == "__main__":
-    app.run(debug=True, port=5090)
+    port = int(os.environ.get("PORT", 5090))  # Use the PORT provided by Render or default to 5090
+    app.run(host="0.0.0.0", port=port)
+
